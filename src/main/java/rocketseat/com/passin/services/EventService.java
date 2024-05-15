@@ -7,7 +7,7 @@ import rocketseat.com.passin.DTO.event.EventRequestDTO;
 import rocketseat.com.passin.DTO.event.EventResponseDTO;
 import rocketseat.com.passin.domain.attendee.Attendee;
 import rocketseat.com.passin.domain.event.Event;
-import rocketseat.com.passin.repositories.AttendeeRepository;
+import rocketseat.com.passin.domain.event.exception.EventNotFoudException;
 import rocketseat.com.passin.repositories.EventReposiry;
 
 import java.text.Normalizer;
@@ -17,29 +17,28 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EventService {
 
-    private final EventReposiry eventReposiry;
+    private final EventReposiry eventRepository;
 
-    private final AttendeeRepository attendeeRepository;
+    private final AttendeeService attendeeService;
 
     public EventResponseDTO getEventDetail(String eventId){
 
-        Event  event =  this.eventReposiry.findById(eventId)
-                .orElseThrow(() -> new RuntimeException("Event not found with id " + eventId));
-        List<Attendee> attendeeList = this.attendeeRepository.findByEventId(eventId);
+        Event  event =  this.eventRepository.findById(eventId)
+                .orElseThrow(() -> new EventNotFoudException("Event not found with id " + eventId));
+        List<Attendee> attendeeList = this.attendeeService.getAllAttendeesFromEvent(eventId);
         return new EventResponseDTO(event,attendeeList.size());
     }
 
     public EventIdDTO createEvent(EventRequestDTO eventDTO){
-        Event event = new Event();
+        Event newEvent = new Event();
+        newEvent.setTitle(eventDTO.title());
+        newEvent.setDetails(eventDTO.details());
+        newEvent.setMaximumAttendees(eventDTO.maximumAttendees());
+        newEvent.setSlug(this.createSlug(eventDTO.title()));
 
-        event.setTitle(eventDTO.title());
-        event.setDetails(eventDTO.details());
-        event.setMaximumAttendees(eventDTO.maximumAttendees());
-        event.setSlug(this.createSlug(eventDTO.title()));
+        this.eventRepository.save(newEvent);
 
-        this.eventReposiry.save(event);
-
-        return new EventIdDTO(event.getId());
+        return new EventIdDTO(newEvent.getId());
 
     }
 

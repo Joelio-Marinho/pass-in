@@ -16,6 +16,7 @@ import lombok.Setter;
 public class Event {
 
     @Id
+    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 

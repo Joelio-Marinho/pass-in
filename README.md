@@ -1,0 +1,61 @@
+# Projeto de check-in de evento concluído através do curso NLW Unite da rocketseat
+
+# Sobre o projeto
+
+> O pass.in é uma aplicação de **gestão de participantes em eventos presenciais**.
+> 
+- A ferramenta permite que o organizador cadastre um evento e abra uma página pública de inscrição.
+- Os participantes inscritos podem emitir uma credencial para check-in no dia do evento.
+- O sistema fará um scan da credencial do participante para permitir a entrada no evento.
+
+## Requisitos
+
+### Requisitos funcionais
+
+- O organizador deve poder cadastrar um novo evento;
+- O organizador deve poder visualizar dados de um evento;
+- O organizador deve poder visualizar a lista de participantes;
+- O participante deve poder se inscrever em um evento;
+- O participante deve poder visualizar seu crachá de inscrição;
+- O participante deve poder realizar check-in no evento;
+
+### Regras de negócio
+
+- O participante só pode se inscrever em um evento uma única vez;
+- O participante só pode se inscrever em eventos com vagas disponíveis;
+- O participante só pode realizar check-in em um evento uma única vez;
+
+### Requisitos não-funcionais
+
+- O check-in no evento será realizado através de um QRCode;
+
+# Criando o projeto
+
+- [x]  Criar projeto usando Spring Initializr
+    - ~~Spring Web~~
+    - ~~Flyway~~
+    - ~~Dev Tools~~
+    - ~~Lombok~~
+    - ~~JPA~~
+- [x]  Criar e configurar banco de dados na aplicação
+    
+    ```xml
+    		<dependency>
+    			<groupId>org.hsqldb</groupId>
+    			<artifactId>hsqldb</artifactId>
+    			<version>2.7.1</version>
+    		</dependency>
+    ```
+    
+- [x]  Criar migrations para criação das tabelas
+- [x]  Criar entidades que irão representar os dados
+    - [x]  Event
+    - [x]  Attendee
+    - [x]  Check-in
+- [x]  Criar repositories
+    - [x]  Event
+    - [x]  Attendee
+    - [x]  Check-in
+- [x]  Criar controllers
+    - [x]  **/events**
+    - [x]  **/attendees**
